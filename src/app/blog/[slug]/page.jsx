@@ -1,31 +1,31 @@
+import PostUser from "@/components/postUser/PostUser";
+import { getPost } from "@/libs/data";
 import Image from "next/image";
-import React from "react";
+import React, { Suspense } from "react";
 
-const getData = async (slug) => {
-  const res = await fetch(`https://jsonplaceholder.typicode.com/posts/${slug}`);
+// const getData = async (slug) => {
+//   const res = await fetch(`https://jsonplaceholder.typicode.com/posts/${slug}`);
 
-  if (!res.ok) {
-    throw new Error("Something went wrong");
-  }
+//   if (!res.ok) {
+//     throw new Error("Something went wrong");
+//   }
 
-  return res.json();
-};
+//   return res.json();
+// };
 
 const SinglePostPage = async ({ params }) => {
   const { slug } = params;
-  const post = await getData(slug);
+
+  //Fetch data without API
+  const post = await getPost(slug);
   return (
     <div>
       <div>
         <Image src="/brands.png" width={300} height={400} />
       </div>
-      <div>
-        <h1 className="text-xl">{post.title}</h1>
-        <span>Authot</span>
-        <span>Terry Jefferson</span>
-        <span>Published</span>
-        <span>01.0</span>
-      </div>
+      <Suspense fallback={<div>Loading...</div>}>
+        <PostUser userId={slug} />
+      </Suspense>
     </div>
   );
 };
