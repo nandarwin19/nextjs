@@ -1,4 +1,5 @@
 import PostCard from "@/components/postCard/postCard";
+import { getPosts } from "@/libs/data";
 import React from "react";
 
 // const getData = async () => {
@@ -14,7 +15,7 @@ import React from "react";
 // };
 
 const Blog = async () => {
-  const posts = await getData();
+  const posts = await getPosts();
   return (
     <div className="flex justify-between flex-wrap">
       {posts.map((post) => (
